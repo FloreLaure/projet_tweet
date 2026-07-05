@@ -1,0 +1,24 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+      - src/preprocess.py
+      - data/raw/tweets_suspect.csv
+    outs:
+      - data/raw/processed.csv
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - data/raw/processed.csv
+    outs:
+      - model.pkl
+
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - src/evaluate.py
+      - model.pkl
+    metrics:
+      - metrics.json
